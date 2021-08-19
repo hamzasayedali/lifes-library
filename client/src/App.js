@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from 'react-router-dom';
+import Person from './Person';
 import './App.scss';
-import { Fragment } from 'react';
 
 function Home() {
   const [data, setData] = useState(null);
@@ -82,7 +83,12 @@ function Home() {
           memories.map((memory, index) => {
             return (
               <li key={index} >
-                {memory.title} <br /> {memory.location} <br /> {memory.date} <br /> {memory.people} 
+                {memory.title}<br />
+                {memory.location}<br />
+                {memory.date}<br />
+                {memory.people.split(',').map(person => (
+                  <span><Link to={`/people/${person}`}>{person}</Link>&nbsp;</span>
+                ))}
               </li>
             )
           })
@@ -100,6 +106,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route path="/people/:person">
+            <Person />
           </Route>
         </Switch>
       </Container>
