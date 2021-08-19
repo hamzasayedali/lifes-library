@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';
 import './App.scss';
 import { Fragment } from 'react';
+import Card from 'react-bootstrap/Card'
 
 function Home() {
   const [data, setData] = useState(null);
@@ -76,18 +77,25 @@ function Home() {
       <h2>
         Old Memories
       </h2>
-
-      <ul>
-        {
+      {
           memories.map((memory, index) => {
             return (
-              <li key={index} >
-                {memory.title} <br /> {memory.location} <br /> {memory.date} <br /> {memory.people} 
-              </li>
+              <Card key={index} style={{ width: '20rem' }}>
+                <Card.Header>
+                   <Card.Title>{memory.title}</Card.Title>
+                </Card.Header>
+                <Card.Body>
+                    <Card.Subtitle>
+                       {memory.location}
+                    </Card.Subtitle>
+                    <Card.Text>
+                      {memory.people}<br /><cite>{memory.date}</cite>
+                    </Card.Text>
+                </Card.Body>
+              </Card>       
             )
           })
         }
-      </ul>
     </Fragment>
   );
 }
