@@ -11,8 +11,9 @@ import {
 import Person from './Person';
 import Location from './Location';
 import './App.scss';
-import Card from 'react-bootstrap/Card'
-
+import Card from 'react-bootstrap/Card';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 function Home() {
   const [data, setData] = useState(null);
@@ -80,12 +81,13 @@ function Home() {
       <h2>
         Old Memories
       </h2>
-      {
-          memories.map((memory, index) => {
-            return (
-              <Card key={index} style={{ width: '20rem' }}>
+      <Row>
+        {memories.map((memory, index) => {
+          return (
+            <Col key={index} xs={12} sm={4} md={3}>
+              <Card style={{ width: '20rem' }}>
                 <Card.Header>
-                   <Card.Title>{memory.title}</Card.Title>
+                  <Card.Title>{memory.title}</Card.Title>
                 </Card.Header>
                 <Card.Body>
                     <Card.Subtitle>
@@ -98,10 +100,11 @@ function Home() {
                       <cite>{memory.date}</cite>
                     </Card.Text>
                 </Card.Body>
-              </Card>       
-            )
-          })
-        }
+              </Card>
+            </Col>
+          );
+        })}
+      </Row>
     </Fragment>
   );
 }
