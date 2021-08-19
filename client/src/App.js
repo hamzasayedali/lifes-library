@@ -36,8 +36,10 @@ function Home() {
       })
     })
       .then((res) => res.json())
-      .then((data)=>setData(data.message));      
-    setNewMemories(true);
+      .then((data) => {
+        setData(data.message);
+        setNewMemories(true);
+      });
   }
 
   React.useEffect(() => {
