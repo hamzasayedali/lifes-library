@@ -9,6 +9,7 @@ import {
   Link
 } from 'react-router-dom';
 import Person from './Person';
+import Location from './Location';
 import './App.scss';
 
 function Home() {
@@ -84,7 +85,7 @@ function Home() {
             return (
               <li key={index} >
                 {memory.title}<br />
-                {memory.location}<br />
+                <Link to={`/locations/${memory.location}`}>{memory.location}</Link><br />
                 {memory.date}<br />
                 {memory.people.split(',').map(person => (
                   <span><Link to={`/people/${person}`}>{person}</Link>&nbsp;</span>
@@ -109,6 +110,9 @@ function App() {
           </Route>
           <Route path="/people/:person">
             <Person />
+          </Route>
+          <Route path="/locations/:location">
+            <Location />
           </Route>
         </Switch>
       </Container>
