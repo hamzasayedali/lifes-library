@@ -9,6 +9,7 @@ function App() {
   const [location, setLocation] = useState("");
   const [event, setEvent] = useState("");
   const [people, setPeople] = useState("");
+  const [date, setDate] = useState(Date);
 
   React.useEffect(() => {
     fetch("/api")
@@ -36,8 +37,16 @@ function App() {
           <Form.Label>Who Were You With?</Form.Label>
           <Form.Control name="people" type="text" placeholder="Enter Persons Name" onChange={ (e) => {setPeople(e.target.value)} } value={people}/>
         </Form.Group>
+
+        <Form.Group className="mb-3" controlId="formEnterDate">
+          <Form.Label>Enter Date</Form.Label>
+          <Form.Control name="date" type="date" placeholder="choose date" onChange={ (e) => {setDate(e.target.value)} } value={date} />
+        </Form.Group>
+
         <Button variant="primary" type="submit">Save Memory</Button>
       </Form>
+
+
 
     </Container>
   );
