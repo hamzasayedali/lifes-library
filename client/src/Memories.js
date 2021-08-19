@@ -20,8 +20,8 @@ function Memories({ memories }) {
                   </Card.Subtitle>
                   <Card.Text>
                     {memory.people.split(',').map(person => (
-                  <span><Link to={`/people/${person}`}>{person}</Link>&nbsp;</span>
-                ))}<br />
+                      <span><Link to={`/people/${person}`}>{person}</Link>&nbsp;</span>
+                    ))}<br />
                     <cite>{memory.date}</cite>
                   </Card.Text>
               </Card.Body>
