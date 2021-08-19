@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from 'react-router-dom';
 import './App.scss';
+import { Fragment } from 'react';
 
-function App() {
+function Home() {
   const [data, setData] = useState(null);
   const [location, setLocation] = useState("");
   const [event, setEvent] = useState("");
@@ -40,8 +46,7 @@ function App() {
 
 
   return (
-    <Container>
-      <h1>Life's Library</h1>
+    <Fragment>
       <p>{!data ? "" : data}</p>
 
       <Form onSubmit={handleSubmit}>
@@ -83,9 +88,23 @@ function App() {
           })
         }
       </ul>
-
-     </Container>
+    </Fragment>
   );
+}
+
+function App() {
+  return (
+    <Router>
+      <Container>
+        <h1>Life's Library</h1>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Container>
+    </Router>
+  )
 }
 
 export default App;
