@@ -21,20 +21,20 @@ function App() {
       <h1>Life's Library</h1>
       <p>{!data ? "Loading..." : data}</p>
 
-      <Form>
+      <Form action="http://localhost:3000/api/add" method="POST">
         <Form.Group className="mb-3" controlId="formEnterLocation">
           <Form.Label>Location of Memory</Form.Label>
-          <Form.Control type="text" placeholder="Enter Location" onChange={(e) => {setLocation(e.target.value)} } value={location}/>
+          <Form.Control name="location" type="text" placeholder="Enter Location" onChange={(e) => {setLocation(e.target.value)} } value={location}/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formEnterEvent">
           <Form.Label>Event</Form.Label>
-          <Form.Control type="text" placeholder="Enter Event" onChange={ (e) => {setEvent(e.target.value)} } value={event}/>
+          <Form.Control name="title" type="text" placeholder="Enter Event" onChange={ (e) => {setEvent(e.target.value)} } value={event}/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formEnterPeople">
           <Form.Label>Who Were You With?</Form.Label>
-          <Form.Control type="text" placeholder="Enter Persons Name" onChange={ (e) => {setPeople(e.target.value)} } value={people}/>
+          <Form.Control name="people" type="text" placeholder="Enter Persons Name" onChange={ (e) => {setPeople(e.target.value)} } value={people}/>
         </Form.Group>
         <Button variant="primary" type="submit">Save Memory</Button>
       </Form>
