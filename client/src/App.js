@@ -19,6 +19,7 @@ function Home() {
   const [people, setPeople] = useState("");
   const [date, setDate] = useState(Date);
   const [memories, setMemories] = useState([]);
+  const [newMemories, setNewMemories] = useState(true);
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -34,16 +35,19 @@ function Home() {
         date
       })
     })
-    .then((res) => res.json())
-    .then((data)=>setData(data.message));      
-
+      .then((res) => res.json())
+      .then((data)=>setData(data.message));      
+    setNewMemories(true);
   }
 
   React.useEffect(() => {
-    fetch("/api/memories")
-      .then((res) => res.json())
-      .then((serverMemories)=>setMemories(serverMemories));
-  }, []);
+    if (newMemories) {
+      fetch("/api/memories")
+        .then((res) => res.json())
+        .then((serverMemories) => setMemories(serverMemories));
+      setNewMemories(false);
+    }
+  }, [newMemories]);
 
   return (
     <Fragment>
