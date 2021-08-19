@@ -28,25 +28,6 @@ router.post('/api/add', (req,res)=>{
 })
 
 
-app.get("/api/test", async(req, res) => {
-  const session = driver.session()
-
-  try{
-    const result = await session.run(
-      'CREATE (a:Person {name: $name}) RETURN a',
-      { name: "Ben"}
-    )
-
-    const singleRecord = result.records[0]
-    const node = singleRecord.get(0)
-
-    console.log(node.properties.name)
-    res.json({message: node});
-  }finally{
-    await session.close()
-  }
-});
-
 //Here is where all the api endpoints will go
 
 //Post for making a event
@@ -139,7 +120,79 @@ router.get("/api/memories", async(req, res) => {
   }
 });
 
+router.get("/api/people/:personname/memories", async(req, res) => {
 
+  const session = driver.session()
+
+  const person = req.params.personname;
+
+  try{
+    const result = await session.run(
+      `MATCH (p:Person {personName: $personName})-[:ATTENDED]->(event:Event)-[:AT]->(location:Location) 
+      Return location, event, collect(p) as people`, {personName: person}
+    );
+
+    const response = [];
+    for(i = 0; i<result.records.length; i++){
+
+      const r = result.records[i];
+
+      console.log(r.get("people"))
+
+      const people_names = r.get("people").map(p => p.properties.personName);
+
+      response.push({
+        location: r.get("location").properties.locationName.toString(),
+        title : r.get("event").properties.eventName.toString(),
+        people : people_names.join(","),
+        date : r.get("event").properties.date.toString(),
+      })
+    }
+
+    res.json(response)
+
+
+  }finally{
+    await session.close();
+  }
+});
+
+router.get("/api/locations/:locationname/memories", async(req, res) => {
+
+  const session = driver.session()
+
+  const location = req.params.locationname;
+
+  try{
+    const result = await session.run(
+      `MATCH (p:Person)-[:ATTENDED]->(event:Event)-[:AT]->(location:Location {locationName: $locationName}) 
+      Return location, event, collect(p) as people`, {locationName: location}
+    );
+
+    const response = [];
+    for(i = 0; i<result.records.length; i++){
+
+      const r = result.records[i];
+
+      console.log(r.get("people"))
+
+      const people_names = r.get("people").map(p => p.properties.personName);
+
+      response.push({
+        location: r.get("location").properties.locationName.toString(),
+        title : r.get("event").properties.eventName.toString(),
+        people : people_names.join(","),
+        date : r.get("event").properties.date.toString(),
+      })
+    }
+
+    res.json(response)
+
+
+  }finally{
+    await session.close();
+  }
+});
 
 app.use("/", router);
 app.listen(PORT, () => {

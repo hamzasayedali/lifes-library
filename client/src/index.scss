@@ -5,4 +5,12 @@ $theme-colors: (
   "primary": #3E58B6,
 );
 
+a:link{
+  text-decoration: none;
+}
+
+h1{
+  color: $body-color;
+}
+
 @import '~bootstrap/scss/bootstrap.scss';

@@ -91,7 +91,7 @@ function App() {
   return (
     <Router>
       <Container>
-        <h1>Life's Library</h1>
+        <a href="/"><h1>Life's Library</h1></a>
         <Switch>
           <Route exact path="/">
             <Home />
