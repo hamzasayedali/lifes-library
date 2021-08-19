@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from 'react-router-dom';
+import Person from './Person';
+import Location from './Location';
 import './App.scss';
 
-function App() {
+function Home() {
   const [data, setData] = useState(null);
   const [location, setLocation] = useState("");
   const [event, setEvent] = useState("");
   const [people, setPeople] = useState("");
   const [date, setDate] = useState(Date);
+  const [memories, setMemories] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -31,15 +40,16 @@ function App() {
   }
 
   React.useEffect(() => {
-    fetch("/api")
+    fetch("/api/memories")
       .then((res) => res.json())
-      .then((data)=>setData(data.message));
+      .then((serverMemories)=>setMemories(serverMemories));
   }, []);
 
+
+
   return (
-    <Container>
-      <h1>Life's Library</h1>
-      <p>{!data ? "Loading..." : data}</p>
+    <Fragment>
+      <p>{!data ? "" : data}</p>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formEnterLocation">
@@ -65,10 +75,49 @@ function App() {
         <Button variant="primary" type="submit">Save Memory</Button>
       </Form>
 
+      <h2>
+        Old Memories
+      </h2>
 
-
-    </Container>
+      <ul>
+        {
+          memories.map((memory, index) => {
+            return (
+              <li key={index} >
+                {memory.title}<br />
+                <Link to={`/locations/${memory.location}`}>{memory.location}</Link><br />
+                {memory.date}<br />
+                {memory.people.split(',').map(person => (
+                  <span><Link to={`/people/${person}`}>{person}</Link>&nbsp;</span>
+                ))}
+              </li>
+            )
+          })
+        }
+      </ul>
+    </Fragment>
   );
+}
+
+function App() {
+  return (
+    <Router>
+      <Container>
+        <h1>Life's Library</h1>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/people/:person">
+            <Person />
+          </Route>
+          <Route path="/locations/:location">
+            <Location />
+          </Route>
+        </Switch>
+      </Container>
+    </Router>
+  )
 }
 
 export default App;
