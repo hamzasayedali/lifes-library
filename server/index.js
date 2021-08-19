@@ -26,7 +26,7 @@ router.post('/api/add', (req,res)=>{
 
   console.log(memory);
 
-  res.send("Memory is added to the database")
+  res.json({message: "Memory is added to the database"});
 })
 
 
