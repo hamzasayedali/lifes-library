@@ -24,17 +24,17 @@ function App() {
       <Form>
         <Form.Group className="mb-3" controlId="formEnterLocation">
           <Form.Label>Location of Memory</Form.Label>
-          <Form.Control type="location" placeholder="Enter Location" onChange={(e) => {setLocation(e.target.value)} } value={location}/>
+          <Form.Control type="text" placeholder="Enter Location" onChange={(e) => {setLocation(e.target.value)} } value={location}/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formEnterEvent">
           <Form.Label>Event</Form.Label>
-          <Form.Control type="event" placeholder="Enter Event" onChange={ (e) => {setEvent(e.target.value)} } value={event}/>
+          <Form.Control type="text" placeholder="Enter Event" onChange={ (e) => {setEvent(e.target.value)} } value={event}/>
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formEnterPeople">
           <Form.Label>Who Were You With?</Form.Label>
-          <Form.Control type="attendees" placeholder="Enter Persons Name" onChange={ (e) => {setPeople(e.target.value)} } value={people}/>
+          <Form.Control type="text" placeholder="Enter Persons Name" onChange={ (e) => {setPeople(e.target.value)} } value={people}/>
         </Form.Group>
         <Button variant="primary" type="submit">Save Memory</Button>
       </Form>
