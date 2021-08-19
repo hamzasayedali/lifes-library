@@ -70,7 +70,22 @@ router.get("/api", (req, res) => {
 
 
 //this is where all the endpoints will go
-
+router.get("/api/memories", (req, res) => {
+  res.json([
+    {
+      location: 'Toronto',
+      title: 'BSS Concert',
+      people: 'Hung,Dave',
+      date: '2021-07-01',
+    },
+    {
+      location: 'Waterloo',
+      title: 'Hack Day',
+      people: 'Hamza,Grace',
+      date: '2021-08-19',
+    },
+  ]);
+});
 
 
 
