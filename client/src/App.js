@@ -1,4 +1,5 @@
 import React from 'react';
+import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import './App.css';
 
@@ -12,13 +13,11 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Life's Library</h1>
-        <p>{!data ? "Loading..." : data}</p>
-        <Button>Save Memory</Button>
-      </header>
-    </div>
+    <Container>
+      <h1>Life's Library</h1>
+      <p>{!data ? "Loading..." : data}</p>
+      <Button>Save Memory</Button>
+    </Container>
   );
 }
 
