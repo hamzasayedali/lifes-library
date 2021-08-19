@@ -10,6 +10,7 @@ function App() {
   const [event, setEvent] = useState("");
   const [people, setPeople] = useState("");
   const [date, setDate] = useState(Date);
+  const [memories, setMemories] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -31,15 +32,17 @@ function App() {
   }
 
   React.useEffect(() => {
-    fetch("/api")
+    fetch("/api/memories")
       .then((res) => res.json())
-      .then((data)=>setData(data.message));
+      .then((serverMemories)=>setMemories(serverMemories));
   }, []);
+
+
 
   return (
     <Container>
       <h1>Life's Library</h1>
-      <p>{!data ? "Loading..." : data}</p>
+      <p>{!data ? "" : data}</p>
 
       <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formEnterLocation">
@@ -65,9 +68,23 @@ function App() {
         <Button variant="primary" type="submit">Save Memory</Button>
       </Form>
 
+      <h2>
+        Old Memories
+      </h2>
 
+      <ul>
+        {
+          memories.map((memory, index) => {
+            return (
+              <li key={index} >
+                {memory.title} <br /> {memory.location} <br /> {memory.date} <br /> {memory.people} 
+              </li>
+            )
+          })
+        }
+      </ul>
 
-    </Container>
+     </Container>
   );
 }
 
