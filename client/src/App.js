@@ -13,7 +13,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    fetch("/api/add", {
+    fetch("/api/memories", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
