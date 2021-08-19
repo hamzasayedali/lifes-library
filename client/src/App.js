@@ -6,10 +6,10 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
 } from 'react-router-dom';
 import Person from './Person';
 import Location from './Location';
+import Memories from './Memories';
 import './App.scss';
 
 function Home() {
@@ -45,8 +45,6 @@ function Home() {
       .then((serverMemories)=>setMemories(serverMemories));
   }, []);
 
-
-
   return (
     <Fragment>
       <p>{!data ? "" : data}</p>
@@ -78,23 +76,7 @@ function Home() {
       <h2>
         Old Memories
       </h2>
-
-      <ul>
-        {
-          memories.map((memory, index) => {
-            return (
-              <li key={index} >
-                {memory.title}<br />
-                <Link to={`/locations/${memory.location}`}>{memory.location}</Link><br />
-                {memory.date}<br />
-                {memory.people.split(',').map(person => (
-                  <span><Link to={`/people/${person}`}>{person}</Link>&nbsp;</span>
-                ))}
-              </li>
-            )
-          })
-        }
-      </ul>
+      <Memories memories={memories} />
     </Fragment>
   );
 }
