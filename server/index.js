@@ -109,25 +109,34 @@ router.get("/api/memories", async(req, res) => {
   const session = driver.session()
 
   try{
+    const result = await session.run(
+      `MATCH (p:Person)-[:ATTENDED]->(event:Event)-[:AT]->(location:Location) 
+      Return location, event, collect(p) as people`
+    );
+
+    const response = [];
+    for(i = 0; i<result.records.length; i++){
+
+      const r = result.records[i];
+
+      console.log(r.get("people"))
+
+      const people_names = r.get("people").map(p => p.properties.personName);
+
+      response.push({
+        location: r.get("location").properties.locationName.toString(),
+        title : r.get("event").properties.eventName.toString(),
+        people : people_names.join(","),
+        date : r.get("event").properties.date.toString(),
+      })
+    }
+
+    res.json(response)
+
 
   }finally{
-
+    await session.close();
   }
-
-  res.json([
-    {
-      location: 'Toronto',
-      title: 'BSS Concert',
-      people: 'Hung,Dave',
-      date: '2021-07-01',
-    },
-    {
-      location: 'Waterloo',
-      title: 'Hack Day',
-      people: 'Hamza,Grace',
-      date: '2021-08-19',
-    },
-  ]);
 });
 
 
