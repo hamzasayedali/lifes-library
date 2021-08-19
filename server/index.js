@@ -67,8 +67,53 @@ router.get("/api", (req, res) => {
 });
 
 
+router.post("/api/memories", async(req, res) => {
+  const session = driver.session()
+
+  console.log(req.body)
+
+  const title = req.body.event;
+  const date = req.body.date;
+  const people = req.body.people.split(',');
+  const location = req.body.location;
+
+  try{
+      for(i = 0; i<people.length; i++){
+        const result = await session.run(
+          `MERGE (l:Location {locationName: $locationName}) 
+          MERGE (e:Event {eventName: $eventName, date: date($date)}) 
+          MERGE (p:Person {personName:$personName}) 
+          MERGE (p)-[:ATTENDED]->(e) 
+          MERGE (e)-[:AT]->(l) RETURN e,p,l`,
+          {
+            locationName: location,
+            eventName: title,
+            date: date,
+            personName: people[i].trim(),
+          });
+  
+          console.log(result);
+      }
+      
+
+    res.json({message: "Memory is added to the database"});
+  }
+  finally{
+    await session.close();
+  }
+})
+
 //this is where all the endpoints will go
-router.get("/api/memories", (req, res) => {
+router.get("/api/memories", async(req, res) => {
+
+  const session = driver.session()
+
+  try{
+
+  }finally{
+
+  }
+
   res.json([
     {
       location: 'Toronto',

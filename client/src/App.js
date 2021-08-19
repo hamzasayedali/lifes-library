@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import {
   BrowserRouter as Router,
   Switch,
-  Route
+  Route,
+  Link
 } from 'react-router-dom';
+import Person from './Person';
+import Location from './Location';
 import './App.scss';
-import { Fragment } from 'react';
 import Card from 'react-bootstrap/Card'
+
 
 function Home() {
   const [data, setData] = useState(null);
@@ -21,7 +24,7 @@ function Home() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    fetch("/api/add", {
+    fetch("/api/memories", {
       method: "POST",
       headers: {
         'Content-Type': 'application/json'
@@ -86,10 +89,13 @@ function Home() {
                 </Card.Header>
                 <Card.Body>
                     <Card.Subtitle>
-                       {memory.location}
+                      <Link to={`/locations/${memory.location}`}>{memory.location}</Link>
                     </Card.Subtitle>
                     <Card.Text>
-                      {memory.people}<br /><cite>{memory.date}</cite>
+                      {memory.people.split(',').map(person => (
+                    <span><Link to={`/people/${person}`}>{person}</Link>&nbsp;</span>
+                  ))}<br />
+                      <cite>{memory.date}</cite>
                     </Card.Text>
                 </Card.Body>
               </Card>       
@@ -108,6 +114,12 @@ function App() {
         <Switch>
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route path="/people/:person">
+            <Person />
+          </Route>
+          <Route path="/locations/:location">
+            <Location />
           </Route>
         </Switch>
       </Container>
