@@ -17,23 +17,23 @@ function App() {
     <Container>
       <h1>Life's Library</h1>
       <p>{!data ? "Loading..." : data}</p>
-      <Button>Save Memory</Button>
 
       <Form>
-        <Form.Group controlId="formEnterLocation">
+        <Form.Group className="mb-3" controlId="formEnterLocation">
           <Form.Label>Location of Memory</Form.Label>
           <Form.Control type="location" placeholder="Enter Location" />
         </Form.Group>
 
-        <Form.Group controlId="formEnterEvent">
+        <Form.Group className="mb-3" controlId="formEnterEvent">
           <Form.Label>Event</Form.Label>
           <Form.Control type="event" placeholder="Enter Event" />
         </Form.Group>
 
-        <Form.Group controlId="formEnterPeople">
+        <Form.Group className="mb-3" controlId="formEnterPeople">
           <Form.Label>Who Were You With?</Form.Label>
           <Form.Control type="attendees" placeholder="Enter Persons Name" />
         </Form.Group>
+        <Button variant="primary" type="submit">Save Memory</Button>
       </Form>
 
     </Container>
