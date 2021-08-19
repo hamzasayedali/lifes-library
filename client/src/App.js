@@ -11,6 +11,25 @@ function App() {
   const [people, setPeople] = useState("");
   const [date, setDate] = useState(Date);
 
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    fetch("/api/add", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        location,
+        event,
+        people,
+        date
+      })
+    })
+    .then((res) => res.json())
+    .then((data)=>setData(data.message));      
+
+  }
+
   React.useEffect(() => {
     fetch("/api")
       .then((res) => res.json())
@@ -22,7 +41,7 @@ function App() {
       <h1>Life's Library</h1>
       <p>{!data ? "Loading..." : data}</p>
 
-      <Form action="http://localhost:3000/api/add" method="POST">
+      <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formEnterLocation">
           <Form.Label>Location of Memory</Form.Label>
           <Form.Control name="location" type="text" placeholder="Enter Location" onChange={(e) => {setLocation(e.target.value)} } value={location}/>
