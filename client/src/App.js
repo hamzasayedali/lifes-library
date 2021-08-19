@@ -1,5 +1,5 @@
 import React from 'react';
-import logo from './logo.svg';
+import Button from 'react-bootstrap/Button';
 import './App.css';
 
 function App() {
@@ -14,8 +14,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+        <h1>Life's Library</h1>
         <p>{!data ? "Loading..." : data}</p>
+        <Button>Save Memory</Button>
       </header>
     </div>
   );
