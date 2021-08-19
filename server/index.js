@@ -9,9 +9,7 @@ const app = express();
 
 //configure express to use body-parser as middle-ware
 app.use(cors());
-
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(express.json());
 
 //consts
 
