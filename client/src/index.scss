@@ -1,4 +1,4 @@
-$body-bg: #E4D6C8;
+$body-bg: #f2ecda;
 $body-color: #18020C;
 
 $theme-colors: (
@@ -9,8 +9,8 @@ a:link{
   text-decoration: none;
 }
 
-h1{
-  color: $body-color;
+h1, h2{
+  color: rgb(128, 128, 128);
 }
 
 @import '~bootstrap/scss/bootstrap.scss';
